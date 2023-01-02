@@ -4,5 +4,6 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', TodoHandlers.findAll);
+router.post('/', TodoHandlers.createOne);
 
 export default router;
