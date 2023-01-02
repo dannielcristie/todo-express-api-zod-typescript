@@ -22,3 +22,19 @@ describe('GET /api/v1/todos', () => {
       })
   );
 });
+
+describe('POST /api/v1/todos', () => {
+  it('responds with an error if the todos is invalid', async () =>
+    request(app)
+      .post('/api/v1/todos')
+      .set('Accept', 'application/json')
+      .send({
+        content: '',
+      })
+      .expect('Content-Type', /json/)
+      .expect(422)
+      .then((response) => {
+        expect(response.body).toHaveProperty('message');
+      })
+  );
+});
