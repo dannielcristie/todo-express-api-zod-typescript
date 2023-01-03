@@ -13,13 +13,24 @@ router.get(
   validadeRequest({
     params: ParamsWithId,
   }),
-  TodoHandlers.findOne);
+  TodoHandlers.findOne
+);
 
 router.post(
   '/',
   validadeRequest({
     body: Todo,
   }),
-  TodoHandlers.createOne);
+  TodoHandlers.createOne
+);
+
+router.put(
+  '/:id',
+  validadeRequest({
+    params: ParamsWithId,
+    body: Todo
+  }),
+  TodoHandlers.updateOne
+);
 
 export default router;

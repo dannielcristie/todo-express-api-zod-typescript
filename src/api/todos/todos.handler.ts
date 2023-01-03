@@ -48,3 +48,22 @@ export const findOne = async (req: Request<ParamsWithId, TodoWithId, {}>, res: R
     next(error)
   }
 };
+
+export const updateOne = async (req: Request<ParamsWithId, TodoWithId, Todo>, res: Response<TodoWithId>, next: NextFunction) => {
+  try {
+    const result = await Todos.findOneAndUpdate({
+      _id: new ObjectId(req.params.id)
+    }, {
+      $set: req.body,
+    }, {
+      returnDocument: 'after'
+    })
+    if (!result.value) {
+      res.status(404);
+      throw new Error(`Todo with id "${req.params.id} not found."`)
+    }
+    res.json(result.value)
+  } catch (error) {
+    next(error);
+  }
+};
