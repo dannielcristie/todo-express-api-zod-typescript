@@ -37,4 +37,23 @@ describe('POST /api/v1/todos', () => {
         expect(response.body).toHaveProperty('message');
       })
   );
+
+  it('responds with an inserted object', async () =>
+    request(app)
+      .post('/api/v1/todos')
+      .set('Accept', 'application/json')
+      .send({
+        content: 'Learn Typescript',
+        done: false
+      })
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .then((response) => {
+        expect(response.body).toHaveProperty('_id');
+        expect(response.body).toHaveProperty('content');
+        expect(response.body.content).toBe('Learn Typescript');
+        expect(response.body).toHaveProperty('done');
+      })
+  );
+
 });
