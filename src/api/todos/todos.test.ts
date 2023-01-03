@@ -92,3 +92,44 @@ describe('GET /api/v1/todos/:id', () => {
       .expect(404, done)
   });
 });
+
+describe('PUT /api/v1/todos/:id', () => {
+  it('responds with an invalid ObjectId error', (done) => {
+    request(app)
+      .put(`/api/v1/todos/anyId`)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(422, done)
+  });
+
+  it('responds with a not found error', (done) => {
+    request(app)
+      .put(`/api/v1/todos/63b4b11a649d50bd73a2ea22`)
+      .set('Accept', 'application/json')
+      .send({
+        content: 'Learn Typescript',
+        done: true
+      })
+      .expect('Content-Type', /json/)
+      .expect(404, done)
+  });
+
+  it('responds with a single todo', async () =>
+    request(app)
+      .put(`/api/v1/todos/${id}`)
+      .set('Accept', 'application/json')
+      .send({
+        content: 'Learn Typescript',
+        done: true
+      })
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).toHaveProperty('_id');
+        expect(response.body._id).toBe(id);
+        expect(response.body).toHaveProperty('content');
+        expect(response.body).toHaveProperty('done');
+        expect(response.body.done).toBe(true);
+      })
+  );
+});
