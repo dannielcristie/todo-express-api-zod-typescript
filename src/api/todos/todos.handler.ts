@@ -1,6 +1,8 @@
+import { ParamsWithId } from './../../interfaces/ParamsWithId';
 import { Request, Response, NextFunction } from 'express';
 import { TodoWithId, Todos, Todo } from './todos.model';
 import { ZodError } from 'zod';
+import { ObjectId } from 'mongodb';
 
 export const findAll = async (req: Request, res: Response<TodoWithId[]>, next: NextFunction) => {
   try {
@@ -32,3 +34,17 @@ export const createOne = async (req: Request<{}, TodoWithId, Todo>, res: Respons
 };
 
 
+export const findOne = async (req: Request<ParamsWithId, TodoWithId, {}>, res: Response<TodoWithId>, next: NextFunction) => {
+  try {
+    const result = await Todos.findOne({
+      _id: new ObjectId(req.params.id),
+    });
+    if (!result) {
+      res.status(404);
+      throw new Error(`Todo with id "${req.params.id} not found."`)
+    }
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+};
