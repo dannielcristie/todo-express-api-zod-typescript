@@ -22,7 +22,6 @@ describe('GET /api/v1/todos', () => {
       })
   );
 });
-
 let id = '';
 
 describe('POST /api/v1/todos', () => {

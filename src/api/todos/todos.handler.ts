@@ -6,8 +6,7 @@ import { ObjectId } from 'mongodb';
 
 export const findAll = async (req: Request, res: Response<TodoWithId[]>, next: NextFunction) => {
   try {
-    const result = await Todos.find();
-    const todos = await result.toArray();
+    const todos = await Todos.find().toArray();
     res.json(todos);
   } catch (error) {
     next(error);
