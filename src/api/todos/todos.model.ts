@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { db } from '../../db';
 
 
-const Todo = z.object({
+export const Todo = z.object({
   content: z.string().min(1),
   done: z.boolean().default(false),
 });
