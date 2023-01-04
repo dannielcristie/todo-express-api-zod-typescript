@@ -7,7 +7,11 @@ import { Todo } from './todos.model';
 
 const router = Router();
 
-router.get('/', TodoHandlers.findAll);
+router.get(
+  '/',
+  TodoHandlers.findAll
+);
+
 router.get(
   '/:id',
   validadeRequest({

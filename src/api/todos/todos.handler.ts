@@ -13,8 +13,6 @@ export const findAll = async (req: Request, res: Response<TodoWithId[]>, next: N
   };
 };
 
-
-
 export const createOne = async (req: Request<{}, TodoWithId, Todo>, res: Response<TodoWithId>, next: NextFunction) => {
   try {
     const insertResult = await Todos.insertOne(req.body);
@@ -31,7 +29,6 @@ export const createOne = async (req: Request<{}, TodoWithId, Todo>, res: Respons
     next(error);
   };
 };
-
 
 export const findOne = async (req: Request<ParamsWithId, TodoWithId, {}>, res: Response<TodoWithId>, next: NextFunction) => {
   try {
